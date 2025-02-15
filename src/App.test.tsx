@@ -16,12 +16,13 @@ test("Button flow", () => {
   expect(buttonElement).toHaveClass(styles.blue);
 });
 
-test("Checkbox flow", () => {
+test("Checkbox controls button enables", () => {
   render(<App />);
 
   // check initial status
   const buttonElement = screen.getByRole("button", { name: /blue/i });
   const checkboxElement = screen.getByRole("checkbox");
+  expect(buttonElement).toHaveClass(styles.red);
 
   expect(buttonElement).toBeEnabled();
   expect(checkboxElement).not.toBeChecked();
@@ -29,8 +30,40 @@ test("Checkbox flow", () => {
   fireEvent.click(checkboxElement);
   expect(buttonElement).toBeDisabled();
   expect(checkboxElement).toBeChecked();
+  expect(buttonElement).toHaveClass(styles.grey);
 
   fireEvent.click(checkboxElement);
   expect(buttonElement).toBeEnabled();
   expect(checkboxElement).not.toBeChecked();
+  expect(buttonElement).toHaveClass(styles.red);
+});
+
+test("Button colors when disabled", () => {
+  render(<App />);
+
+  // check initial status
+  const buttonElement = screen.getByRole("button", { name: /blue/i });
+  const checkboxElement = screen.getByRole("checkbox");
+
+  expect(buttonElement).toHaveClass(styles.red);
+  expect(buttonElement).toBeEnabled();
+  expect(checkboxElement).not.toBeChecked();
+
+  fireEvent.click(buttonElement);
+  expect(buttonElement).toHaveClass(styles.blue);
+  fireEvent.click(buttonElement);
+  expect(buttonElement).toHaveClass(styles.red);
+
+  fireEvent.click(checkboxElement);
+  expect(buttonElement).toHaveClass(styles.grey);
+
+  fireEvent.click(checkboxElement);
+  expect(buttonElement).toHaveClass(styles.red);
+
+  fireEvent.click(buttonElement);
+  expect(buttonElement).toHaveClass(styles.blue);
+  fireEvent.click(checkboxElement);
+  expect(buttonElement).toHaveClass(styles.grey);
+  fireEvent.click(checkboxElement);
+  expect(buttonElement).toHaveClass(styles.blue);
 });

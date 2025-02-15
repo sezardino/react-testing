@@ -1,13 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-describe("App", () => {
-  it("renders the App component", () => {
-    render(<App />);
+import styles from "./App.module.css";
 
-    const headingElement = screen.getByText(/hello world/i);
-    expect(headingElement).toBeInTheDocument();
+test("App render button with correct text and color", () => {
+  render(<App />);
 
-    screen.debug();
-  });
+  const buttonElement = screen.getByRole("button", { name: /blue/i });
+  expect(buttonElement).toHaveClass(styles.red);
 });

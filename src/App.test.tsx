@@ -1,11 +1,17 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import App from "./App";
 
 import styles from "./App.module.css";
 
-test("App render button with correct text and color", () => {
+test("Button flow", () => {
   render(<App />);
 
   const buttonElement = screen.getByRole("button", { name: /blue/i });
+
   expect(buttonElement).toHaveClass(styles.red);
+
+  fireEvent.click(buttonElement);
+
+  expect(buttonElement).toHaveTextContent(/red/i);
+  expect(buttonElement).toHaveClass(styles.blue);
 });

@@ -15,3 +15,22 @@ test("Button flow", () => {
   expect(buttonElement).toHaveTextContent(/red/i);
   expect(buttonElement).toHaveClass(styles.blue);
 });
+
+test("Checkbox flow", () => {
+  render(<App />);
+
+  // check initial status
+  const buttonElement = screen.getByRole("button", { name: /blue/i });
+  const checkboxElement = screen.getByRole("checkbox");
+
+  expect(buttonElement).toBeEnabled();
+  expect(checkboxElement).not.toBeChecked();
+
+  fireEvent.click(checkboxElement);
+  expect(buttonElement).toBeDisabled();
+  expect(checkboxElement).toBeChecked();
+
+  fireEvent.click(checkboxElement);
+  expect(buttonElement).toBeEnabled();
+  expect(checkboxElement).not.toBeChecked();
+});
